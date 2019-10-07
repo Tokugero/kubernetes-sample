@@ -1,0 +1,21 @@
+apiVersion: v1
+data:
+  telegraf.conf: |+
+    [global_tags]
+      hosttype = "sample"
+    [agent]
+      hostname = "$HOSTNAME"
+    [[outputs.influxdb]]
+      urls = ["http://influx.sample:8086"] # required
+      database = "kubernetes" # required
+
+      timeout = "5s"
+    [[inputs.nginx]]
+      urls = ["http://localhost/status"]
+
+kind: ConfigMap
+metadata:
+  labels:
+    k8s-app: nginxtelegraf
+  name: telegrafnginx 
+  namespace: sample

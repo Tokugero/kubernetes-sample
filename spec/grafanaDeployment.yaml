@@ -1,9 +1,10 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1 
 kind: Deployment
 metadata:
   labels:
     app: grafana
   name: grafana
+  namespace: sample
 spec:
   progressDeadlineSeconds: 600
   replicas: 1

@@ -6,7 +6,7 @@ data:
     [agent]
       hostname = "$HOSTNAME"
     [[outputs.influxdb]]
-      urls = ["http://influx.monitoring:8086"] # required
+      urls = ["http://influx.sample:8086"] # required
       database = "kubernetes" # required
 
       timeout = "5s"
@@ -34,3 +34,4 @@ metadata:
   labels:
     k8s-app: telegraf
   name: telegraf
+  namespace: sample

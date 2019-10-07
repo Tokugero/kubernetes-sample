@@ -192,3 +192,4 @@ data:
 kind: ConfigMap
 metadata:
   name: fluentd-config
+  namespace: sample

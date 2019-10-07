@@ -1,10 +1,10 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1 
 kind: DaemonSet
 metadata:
-  generation: 1
   labels:
     k8s-app: telegraf
   name: telegraf
+  namespace: sample
 spec:
   revisionHistoryLimit: 10
   selector:
@@ -15,6 +15,10 @@ spec:
       labels:
         name: telegraf
     spec:
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          effect: NoSchedule
+          operator: Exists
       containers:
       - env:
         - name: HOSTNAME
@@ -77,7 +81,6 @@ spec:
           defaultMode: 420
           name: telegraf
         name: config
-  templateGeneration: 1
   updateStrategy:
     rollingUpdate:
       maxUnavailable: 1

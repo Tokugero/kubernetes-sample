@@ -1,10 +1,14 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1 
 kind: Deployment
 metadata:
   labels:
     app: helloworld
   name: helloworld
+  namespace: sample 
 spec:
+  selector:
+    matchLabels:
+        app: helloworld
   replicas: 3 
   strategy:
     type: RollingUpdate
@@ -15,6 +19,12 @@ spec:
       name: helloworld
     spec:
       containers:
+      - name: telegraf
+        image: telegraf
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: telegrafconf
+          mountPath: /etc/telegraf
       - name: helloworld
         image: nginx 
         ports:
@@ -32,3 +42,6 @@ spec:
         - name: indexhtml
           configMap:
             name: helloworldhtml
+        - name: telegrafconf
+          configMap:
+            name: telegrafnginx

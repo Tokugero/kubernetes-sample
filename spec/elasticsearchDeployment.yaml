@@ -1,12 +1,13 @@
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: esnode
+  namespace: sample
 spec:
-  serviceName: elasticsearch
   replicas: 1
-  updateStrategy:
-    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: es-cluster
   template:
     metadata:
       labels:

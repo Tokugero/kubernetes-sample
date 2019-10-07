@@ -1,10 +1,11 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1 
 kind: DaemonSet
 metadata:
   labels:
     k8s-app: fluentd-logging
     version: v1
   name: fluentd
+  namespace: sample
 spec:
   revisionHistoryLimit: 10
   selector:
@@ -18,6 +19,10 @@ spec:
         k8s-app: fluentd-logging
         version: v1
     spec:
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          effect: NoSchedule
+          operator: Exists
       containers:
       - env:
         - name: FLUENTD_ARGS
@@ -25,7 +30,7 @@ spec:
         - name: FLUENT_UID
           value: "0"
         - name: FLUENT_ELASTICSEARCH_HOST
-          value: elasticsearch.monitoring.svc.cluster.local
+          value: elasticsearch.sample
         - name: FLUENT_ELASTICSEARCH_PORT
           value: "9200"
         - name: FLUENT_ELASTICSEARCH_SCHEME
