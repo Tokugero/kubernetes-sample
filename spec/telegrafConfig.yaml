@@ -26,7 +26,7 @@ data:
     [[inputs.docker]]
       endpoint = "unix:///var/run/docker.sock"
     [[inputs.kubernetes]]
-      url = "http://localhost:10255"
+      url = "http://localhost:10250"
 
 kind: ConfigMap
 metadata:
