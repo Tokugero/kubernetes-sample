@@ -1,0 +1,16 @@
+all:
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+    ansible_ssh_user: root
+    ansible_ssh_private_key_file: /home/tokugero/.ssh/id_rsa
+  children:
+    nodes:
+      hosts:
+        192.168.2.151: 
+          server_id: 1
+        192.168.2.174: 
+          server_id: 2
+    masters:
+      hosts:
+        192.168.2.167:
+          server_id: 1

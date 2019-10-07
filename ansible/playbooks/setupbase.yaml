@@ -1,0 +1,19 @@
+---
+- hosts: all 
+  tasks:
+
+  - name: yum-get update
+    yum:
+            update_cache: yes
+
+  - name: Install packages
+    yum:
+            name:
+              - screen
+              - vim
+              - ntp
+              - net-tools
+              - python-pip
+              - git
+              - curl
+            state: present

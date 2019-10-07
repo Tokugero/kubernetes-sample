@@ -1,0 +1,14 @@
+127.0.0.1 localhost.localdomain localhost
+
+{% for host in groups['masters']|sort %}
+{% if host != 'localhost' %}
+{{ hostvars[host].ansible_default_ipv4.address }} k8s-master-{{ server_id }}
+{% endif %}
+{% endfor %}
+
+{% for host in groups['nodes']|sort %}
+{% if host != 'localhost' %}
+{{ hostvars[host].ansible_default_ipv4.address }} k8s-node-{{ server_id }}
+{% endif %}
+{% endfor %}
+

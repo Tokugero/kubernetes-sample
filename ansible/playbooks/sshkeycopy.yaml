@@ -1,0 +1,9 @@
+---
+- hosts: all
+  tasks:
+    
+    - name: copy ssh key
+      authorized_key: 
+        user: root
+        state: present
+        key: "{{ lookup('file', '/home/tokugero/.ssh/id_rsa.pub') }}"
