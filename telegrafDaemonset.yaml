@@ -1,0 +1,85 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  generation: 1
+  labels:
+    k8s-app: telegraf
+  name: telegraf
+spec:
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      name: telegraf
+  template:
+    metadata:
+      labels:
+        name: telegraf
+    spec:
+      containers:
+      - env:
+        - name: HOSTNAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: spec.nodeName
+        - name: HOST_PROC
+          value: /rootfs/proc
+        - name: HOST_SYS
+          value: /rootfs/sys
+        image: telegraf
+        imagePullPolicy: IfNotPresent
+        name: telegraf
+        resources:
+          limits:
+            memory: 500Mi
+          requests:
+            cpu: 500m
+            memory: 500Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /rootfs/sys
+          name: sys
+          readOnly: true
+        - mountPath: /rootfs/proc
+          name: proc
+          readOnly: true
+        - mountPath: /var/run/docker.sock
+          name: docker-socket
+        - mountPath: /var/run/utmp
+          name: utmp
+          readOnly: true
+        - mountPath: /etc/telegraf
+          name: config
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - hostPath:
+          path: /sys
+          type: ""
+        name: sys
+      - hostPath:
+          path: /var/run/docker.sock
+          type: ""
+        name: docker-socket
+      - hostPath:
+          path: /proc
+          type: ""
+        name: proc
+      - hostPath:
+          path: /var/run/utmp
+          type: ""
+        name: utmp
+      - configMap:
+          defaultMode: 420
+          name: telegraf
+        name: config
+  templateGeneration: 1
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+

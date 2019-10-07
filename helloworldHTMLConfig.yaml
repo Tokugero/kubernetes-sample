@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: helloworldhtml
+data:
+  index.html: |+
+          "Hello, World!"

@@ -1,0 +1,36 @@
+apiVersion: v1
+data:
+  telegraf.conf: |+
+    [global_tags]
+      hosttype = "kubernetes"
+    [agent]
+      hostname = "$HOSTNAME"
+    [[outputs.influxdb]]
+      urls = ["http://influx.monitoring:8086"] # required
+      database = "kubernetes" # required
+
+      timeout = "5s"
+    [[inputs.cpu]]
+      percpu = true
+      totalcpu = true
+      collect_cpu_time = false
+      report_active = false
+    [[inputs.disk]]
+      ignore_fs = ["tmpfs", "devtmpfs", "devfs"]
+    [[inputs.diskio]]
+    [[inputs.kernel]]
+    [[inputs.mem]]
+    [[inputs.processes]]
+    [[inputs.swap]]
+    [[inputs.system]]
+    [[inputs.docker]]
+      endpoint = "unix:///var/run/docker.sock"
+    [[inputs.kubernetes]]
+      url = "http://localhost:10255"
+
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    k8s-app: telegraf
+  name: telegraf
