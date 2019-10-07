@@ -77,3 +77,17 @@
                   owner: root
                   group: root
 
+        - name: allow firewalld 6443
+          firewalld:
+                  port: 6443/tcp
+                  permanent: yes
+                  state: enabled
+
+        - name: allow firewalld 10250
+          firewalld:
+                  port: 10250/tcp
+                  permanent: yes
+                  state: enabled
+
+        - name: disable swap
+          shell: "swapoff -a"
