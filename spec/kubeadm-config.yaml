@@ -3,4 +3,4 @@ kind: ClusterConfiguration
 kubernetesVersion: 1.16.1 
 controlPlaneEndpoint: "k8s-master-1:6443" 
 networking:
-podSubnet: 10.0.0.0/16 
+  podSubnet: 172.16.0.0/16 
