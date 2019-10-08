@@ -28,10 +28,12 @@ kubectl apply -f <all the configs>
 
 ## To get access to the exposed services:
 
+```
 kubectl proxy --port=8080 &
 http://localhost:8080/api/v1/namespaces/sample/services/grafana/proxy/?orgId=1
 http://localhost:8080/api/v1/namespaces/sample/services/helloworld/proxy/
 http://localhost:8080/api/v1/namespaces/sample/services/kibana/proxy/
+```
 
 ### Running configuration status
 
