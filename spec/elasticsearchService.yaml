@@ -10,6 +10,3 @@ spec:
   - name: http #Used for external commands
     port: 9200
     targetPort: 9200
-  - name: transport #Not used in this configuration
-    port: 9300
-    targetPort: 9300

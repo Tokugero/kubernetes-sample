@@ -27,6 +27,15 @@ spec:
         image: kibana:7.4.0
         ports:
         - containerPort: 5601
+        env:
+        - name: ELASTICSEARCH_HOSTS
+          value: http://elasticsearch.sample:9200
+        - name: ELASTICSEARCH_REQUESTTIMEOUT
+          value: "10000000"
+        - name: SERVER_BASEPATH
+          value: /api/v1/namespaces/sample/services/kibana/proxy
+        - name: SERVER_REWRITEBASEPATH
+          value: "false"
       - name: elasticsearch
         resources:
             requests:
@@ -54,8 +63,6 @@ spec:
         ports:
         - containerPort: 9200
           name: es-http
-        - containerPort: 9300
-          name: es-transport
         volumeMounts:
         - name: elasticsearch-config
           mountPath: /usr/share/elasticsearch/config/elasticsearch.yml

@@ -8,8 +8,7 @@ data:
     cluster.name: my-elastic-cluster
     network.host: "0.0.0.0"
     bootstrap.memory_lock: false
-    discovery.zen.ping.unicast.hosts: elasticsearch-cluster
-    discovery.zen.minimum_master_nodes: 1
     xpack.security.enabled: false
     xpack.monitoring.enabled: false
-  ES_JAVA_OPTS: -Xms512m -Xmx512m
+    discovery.type: "single-node"
+  ES_JAVA_OPTS: -Xms512m -Xmx1024m
